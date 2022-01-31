@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(E_ERROR | E_PARSE);
 $filename = $_GET["maps"];
 echo($filename);
 echo("<br>");
@@ -7,29 +7,33 @@ $file = file_get_contents($filename, FILE_USE_INCLUDE_PATH);
 echo($file);
 echo("<br><br>");
 
+$pieces = explode(" ", $file, 174);
+$walls2;
+for($p =0; $p<170; $p++){
+    $walls2[$p] = $pieces[$p+3];
+}
 
-for($i = 0; $i < 10; $i++){
-    $pieces_walls = explode(" ", $file, 17);
-    for($y = 4; $y < 21; $y++){
-        if($i == 0){
-            if($pieces_walls[$y-4] == '0'){
-
-            }else{
-                $tmp = ($y - 4)*80;
-                $tmp2 = $i * 80;
-                echo("<img src=\"img\kamen.png\" style=\"width: 80;height: 80;left: $tmp;top: $tmp2\">");
-            }
-        }else{
-            if($pieces_walls[$y-4] == '0'){
-
-            }else{
-                $tmp = $y*80;
-                $tmp2 = $i * 80;
-                echo("<img src=\"img\kamen.png\" style=\"width: 80;height: 80;left: $tmp;top: $tmp2\">");
-            }
-        }
+$walls;
+for($z =0; $z<10; $z++){
+    for($o =0; $o<17; $o++){
+        $walls[$z][$o]=$walls2[($z*17)+$o-1];
     }
 }
+
+for($i = 0; $i < 17; $i++){
+    for($y = 0; $y < 10; $y++){
+        if($walls[$y][$x] == 0){
+            if($pieces_walls[$y-4] == '0'){
+
+            }else{
+                $_x = $i * 80;
+                $_y = $y * 80;
+                echo("<img src=\"img\kamen.png\" style=\"width: 80;height: 80;position: absolute;left: $_x;top: $_y\">");
+            }
+        }     
+    }
+}
+
 
 /*
 
